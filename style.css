@@ -53,6 +53,12 @@ menu{
     margin: 5px;
 }
 
+input{
+    width: 150px;
+    padding: 5px;
+    margin: 5px;
+}
+
 button{
     width: 100px;
     margin: 10px;
