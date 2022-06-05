@@ -68,11 +68,9 @@ function changePlayer() {
     let p2 = gameState.players[1];
     if (gameState.currentPlayer === p2) {
         playerTurn.innerHTML = gameState.names[0] + "'s turn: X"
-        //console.log("player 1 is: " + p1);
         gameState.currentPlayer = p1;   
     } else {
         playerTurn.innerHTML = gameState.names[1] + "'s turn: O"
-        //console.log("player 2 is: " + p2);
         gameState.currentPlayer = p2;
     }
     return gameState.currentPlayer;
@@ -88,7 +86,9 @@ function win(){
         let third = array[2]
         let playerMark3 = gameState.board[third].value
         if (
+            //checking if valuse are false
             (!playerMark1 || !playerMark2 || !playerMark3) || 
+            //checking to see if valuse are the same or not                      
             (playerMark1 !== playerMark2 || playerMark2 !== playerMark3 || playerMark1 !== playerMark3)
             ) {
         }else {
@@ -118,7 +118,11 @@ function win(){
 //    }
 //}
 
-
+//helper function 
+function changeDisplay(){
+    document.getElementById("player1").style.display = "none";
+    document.getElementById("player2").style.display = "none";
+}
 
 //event listeners
 //when state Game button is pressed then moves names input to gamestate/hides input fields and start game button
@@ -150,11 +154,6 @@ startGame.addEventListener('click', function(event){
     playersTurn.innerHTML = gameState.names[0] + "'s turn: X"    
     startGame.style.display = "none"
 })
-
-function changeDisplay(){
-    document.getElementById("player1").style.display = "none";
-    document.getElementById("player2").style.display = "none";
-}
 
 boardElement.addEventListener('click', function(event) {
     let target = event.target
