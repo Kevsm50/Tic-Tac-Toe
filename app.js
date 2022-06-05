@@ -18,7 +18,6 @@ let gameState= {
     numOfTurns: 0,
 }
 
-
 //new game fucntion help reset elsement back to original state
 function newGame(){
     gameState.board =    
@@ -42,16 +41,19 @@ function newGame(){
 //DOM selectors/ variables
 const boardElement = document.querySelector('#board');
 const playersTurn = document.querySelector('#playerTurn');
-const startGame = document.querySelector('.start')
-const cells = document.querySelectorAll('.cell')
-const reset = document.querySelector('#reset')
-const p1Input = document.querySelector('#p1')
-const p2Input = document.querySelector('#p2')
+const startGame = document.querySelector('.start');
+const cells = document.querySelectorAll('.cell');
+const reset = document.querySelector('#reset');
+const p1Input = document.querySelector('#p1');
+const p2Input = document.querySelector('#p2');
 
 //helper functions
+//rendering game board area to play tic-tac-toe 
+//creating div elemets to place 'x' or 'o'/ creating class name/ creating dataset
+//appending all elements together to creat board
 function renderBoard(){
-    document.querySelector('.player-name1').value = ''
-    document.querySelector('.player-name2').value = ''
+    document.querySelector('.player-name1').value = '';
+    document.querySelector('.player-name2').value = '';
     boardElement.innerHTML = '';
     for (let i = 0; i < gameState.board.length; i++){
         let cell = document.createElement('div');
@@ -67,24 +69,26 @@ function changePlayer() {
     let p1 = gameState.players[0];
     let p2 = gameState.players[1];
     if (gameState.currentPlayer === p2) {
-        playerTurn.innerHTML = gameState.names[0] + "'s turn: X"
+        playerTurn.innerHTML = gameState.names[0] + "'s turn: X";
         gameState.currentPlayer = p1;   
     } else {
-        playerTurn.innerHTML = gameState.names[1] + "'s turn: O"
+        playerTurn.innerHTML = gameState.names[1] + "'s turn: O";
         gameState.currentPlayer = p2;
     }
     return gameState.currentPlayer;
 }
 
+//checks for winning combo's 
 function win(){
+    //loop through gameState.win / get index position and setting valeus to an new variable
     for (let i = 0; i < gameState.win.length; i++){
-        let array = gameState.win[i]
-        let first = array[0]
-        let playerMark1 = gameState.board[first].value
-        let second = array[1]
-        let playerMark2 = gameState.board[second].value
-        let third = array[2]
-        let playerMark3 = gameState.board[third].value
+        let array = gameState.win[i];
+        let first = array[0];
+        let playerMark1 = gameState.board[first].value;
+        let second = array[1];
+        let playerMark2 = gameState.board[second].value;
+        let third = array[2];
+        let playerMark3 = gameState.board[third].value;
         if (
             //checking if valuse are false
             (!playerMark1 || !playerMark2 || !playerMark3) || 
@@ -92,15 +96,15 @@ function win(){
             (playerMark1 !== playerMark2 || playerMark2 !== playerMark3 || playerMark1 !== playerMark3)
             ) {
         }else {
-            gameState.winner = true
-            renderBoard()         
+            gameState.winner = true;
+            renderBoard();   
         }
     }
     //add tie conditions if game.board is full and no winning condition has been meet then it is a tie
     if ((gameState.winner === false) && (gameState.numOfTurns === 9)){
         //alert('draw')
-        renderBoard()
-        return
+        renderBoard();
+        return;
     }
 }
 
@@ -127,134 +131,85 @@ function changeDisplay(){
 //event listeners
 //when state Game button is pressed then moves names input to gamestate/hides input fields and start game button
 startGame.addEventListener('click', function(event){
-    const player1 = document.querySelector('.player-name1').value
-    const player2 = document.querySelector('.player-name2').value
+    const player1 = document.querySelector('.player-name1').value;
+    const player2 = document.querySelector('.player-name2').value;
     if (player1 && player2){
-        gameState.names[0] = player1
-        gameState.names[1]= player2
-        //playerTurn.innerHTML = player1 + " turn"
-        p1Input.innerHTML = "Player 1: " + player1
-        p2Input.innerHTML = "Player 2: " + player2
-        changeDisplay()
+        gameState.names[0] = player1;
+        gameState.names[1] = player2;
+        p1Input.innerHTML = "Player 1: " + player1;
+        p2Input.innerHTML = "Player 2: " + player2;
+        changeDisplay();
     }
     if (!player2){
-        gameState.names[0] = player1
-        gameState.names[1]= 'computer'
-        p1Input.innerHTML = "Player 1: " + player1
-        p2Input.innerHTML = 'Player 2: Computer'
-        changeDisplay()
+        gameState.names[0] = player1;
+        gameState.names[1]= 'computer';
+        p1Input.innerHTML = "Player 1: " + player1;
+        p2Input.innerHTML = 'Player 2: Computer';
+        changeDisplay();
     }
     if (!player1){
-        gameState.names[0] = 'computer'
-        gameState.names[1]= player2
-        p1Input.innerHTML = 'Player 2: Computer'
-        p2Input.innerHTML = 'Player 2: ' + player2
-        changeDisplay()
+        gameState.names[0] = 'computer';
+        gameState.names[1]= player2;
+        p1Input.innerHTML = 'Player 2: Computer';
+        p2Input.innerHTML = 'Player 2: ' + player2;
+        changeDisplay();
     }
-    playersTurn.innerHTML = gameState.names[0] + "'s turn: X"    
-    startGame.style.display = "none"
+    playersTurn.innerHTML = gameState.names[0] + "'s turn: X";    
+    startGame.style.display = "none";
 })
 
+//event listener
+//
 boardElement.addEventListener('click', function(event) {
-    let target = event.target
-    let cellIdx = target.dataset.index
-    let clicked = gameState.board[cellIdx]
+    let target = event.target;
+    let cellIdx = target.dataset.index;
+    let clicked = gameState.board[cellIdx];
     if (gameState.names[0] === null && gameState.names[1] === "Computer"){
-        alert('Please enter player names and press the Start Game button')
-        return
+        alert('Please enter player names and press the Start Game button');
+        return;
     }
     if (target.className !== 'cell') {
         return;
     }
     if (gameState.winner === true){
-        return
+        return;
     }
     if (!clicked.isClicked){        
-        gameState.numOfTurns++
-        clicked.value = gameState.currentPlayer
-        clicked.isClicked = true
-        //computerPlay()
+        gameState.numOfTurns++;
+        clicked.value = gameState.currentPlayer;
+        clicked.isClicked = true;
+        //computerPlay();
         win()
     } else{
-        return
+        return;
     }
     if (gameState.winner === true){
-        playersTurn.innerHTML = gameState.currentPlayer + "'s win"
-        return
+        playersTurn.innerHTML = gameState.currentPlayer + "'s win";
+        return;
     }
     if ((gameState.winner === false) && (gameState.numOfTurns === 9)){
-        playersTurn.innerHTML = 'Game is a draw'
-        return
+        playersTurn.innerHTML = 'Game is a draw';
+        return;
     }
     
-    changePlayer()
+    changePlayer();
     renderBoard();
-    console.log(gameState)
+    console.log(gameState);
 })
 
 //reset to original state
 reset.addEventListener('click', function(event){
     playersTurn.innerHTML = "";
-    p1Input.innerHTML = ''
-    p2Input.innerHTML = ''
+    p1Input.innerHTML = '';
+    p2Input.innerHTML = '';
     document.querySelector(".player-name1").style.display = "inline-block";
     document.querySelector(".player-name2").style.display = "inline-block";
-    document.querySelector(".start").style.display = 'block'
+    document.querySelector(".start").style.display = 'block';
     
-    newGame()
-    renderBoard()
-    console.log(gameState)
+    newGame();
+    renderBoard();
+    console.log(gameState);
 })
 
 newGame();
 renderBoard();
-
-
-//I think I got the draw to work. 
-//I added winner: false and numOfTurns: 0, to game state object. 
-//in board event listener I add incremented to numOfTurns
-//in else statement of win function I turned winner: true
-//then added and if ((gameState.winner === false) && (gameState.numOfTurns === 9)) at the bottom of the win function 
-
-
-
-
-//function winn(){
-//    for (let i = 0; i < gameState.win.length; i++){
-//        let indexes = gameState.win[i]
-//        
-//        for (let j = 0; j < 3; j++){
-//            let index = indexes[j]
-//            console.log(index)
-//            let val = gameState.board[index].value
-//        //if index[0] is not equal to index[1] then return
-//        //check if the value of cells are same
-//        //if some one has one then return 
-//    }
-//}
-
-
-
-
-
-//startGame.addEventListener('click', function(event){
-//    const player1 = document.querySelector('.player-name1').value
-//    const player2 = document.querySelector('.player-name2').value
-//    const p1Input = document.querySelector('#p1')
-//    const p2Input = document.querySelector('#p2')
-//    if (player1){
-//        gameState.names[0] = player1
-//        //playerTurn.innerHTML = player1 + " turn"
-//        p1Input.innerHTML = "Player 1: " + player1
-//        document.getElementById("player1").style.display = "none";
-//        document.getElementById("player2").style.display = "none";
-//    }
-//    if (player2){
-//        gameState.names[1]= player2
-//        p2Input.innerHTML = "Player 2: " + player2
-//        //playerTurn.innerHTML = player2 + " turn"
-//        document.getElementById("player2").style.display = "none";
-//    }
-//    playersTurn.innerHTML = gameState.names[0] + "'s turn: X"    
-//    startGame.style.display = "none"
-//})
