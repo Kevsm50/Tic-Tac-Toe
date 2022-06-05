@@ -45,7 +45,8 @@ const playersTurn = document.querySelector('#playerTurn');
 const startGame = document.querySelector('.start')
 const cells = document.querySelectorAll('.cell')
 const reset = document.querySelector('#reset')
-
+const p1Input = document.querySelector('#p1')
+const p2Input = document.querySelector('#p2')
 
 //helper functions
 function renderBoard(){
@@ -118,33 +119,42 @@ function win(){
 //}
 
 
+
 //event listeners
 //when state Game button is pressed then moves names input to gamestate/hides input fields and start game button
 startGame.addEventListener('click', function(event){
     const player1 = document.querySelector('.player-name1').value
     const player2 = document.querySelector('.player-name2').value
-    const p1Input = document.querySelector('#p1')
-    const p2Input = document.querySelector('#p2')
     if (player1 && player2){
         gameState.names[0] = player1
         gameState.names[1]= player2
         //playerTurn.innerHTML = player1 + " turn"
         p1Input.innerHTML = "Player 1: " + player1
         p2Input.innerHTML = "Player 2: " + player2
-        document.getElementById("player1").style.display = "none";
-        document.getElementById("player2").style.display = "none";
+        changeDisplay()
     }
     if (!player2){
         gameState.names[0] = player1
         gameState.names[1]= 'computer'
         p1Input.innerHTML = "Player 1: " + player1
         p2Input.innerHTML = 'Player 2: Computer'
-        document.getElementById("player1").style.display = "none";
-        document.getElementById("player2").style.display = "none";
+        changeDisplay()
+    }
+    if (!player1){
+        gameState.names[0] = 'computer'
+        gameState.names[1]= player2
+        p1Input.innerHTML = 'Player 2: Computer'
+        p2Input.innerHTML = 'Player 2: ' + player2
+        changeDisplay()
     }
     playersTurn.innerHTML = gameState.names[0] + "'s turn: X"    
     startGame.style.display = "none"
 })
+
+function changeDisplay(){
+    document.getElementById("player1").style.display = "none";
+    document.getElementById("player2").style.display = "none";
+}
 
 boardElement.addEventListener('click', function(event) {
     let target = event.target
@@ -186,11 +196,12 @@ boardElement.addEventListener('click', function(event) {
 //reset to original state
 reset.addEventListener('click', function(event){
     playersTurn.innerHTML = "";
+    p1Input.innerHTML = ''
+    p2Input.innerHTML = ''
     document.querySelector(".player-name1").style.display = "inline-block";
     document.querySelector(".player-name2").style.display = "inline-block";
     document.querySelector(".start").style.display = 'block'
-    document.querySelector('#p1').style.display = 'none'
-    document.querySelector('#p2').style.display = 'none'
+    
     newGame()
     renderBoard()
     console.log(gameState)
