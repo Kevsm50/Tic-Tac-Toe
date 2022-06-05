@@ -108,15 +108,17 @@ function win(){
     }
 }
 
+
 //when only one person is playing the computer will be the second player
 //function computerPlay(){
-//    if (gameState.names[1] === 'Computer'){
+//    if ((gameState.names[1] === 'Computer') && (gameState.currentPlayer === 'x')){
 //        //then computer plays in the next available index that is if open(false)
 //        for(let i = 0; i < gameState.board.length; i++){
 //            let el = gameState.board[i].isClicked
 //            if (gameState.board[0].isClicked === false){
 //               gameState.board[0].value = 'o'
 //               changePlayer()
+//               return
 //            } 
 //        }  
 //    }
@@ -142,13 +144,13 @@ startGame.addEventListener('click', function(event){
     }
     if (!player2){
         gameState.names[0] = player1;
-        gameState.names[1]= 'computer';
+        gameState.names[1]= 'Computer';
         p1Input.innerHTML = "Player 1: " + player1;
         p2Input.innerHTML = 'Player 2: Computer';
         changeDisplay();
     }
     if (!player1){
-        gameState.names[0] = 'computer';
+        gameState.names[0] = 'Computer';
         gameState.names[1]= player2;
         p1Input.innerHTML = 'Player 2: Computer';
         p2Input.innerHTML = 'Player 2: ' + player2;
@@ -175,9 +177,9 @@ boardElement.addEventListener('click', function(event) {
         return;
     }
     if (!clicked.isClicked){        
-        gameState.numOfTurns++;
         clicked.value = gameState.currentPlayer;
         clicked.isClicked = true;
+        gameState.numOfTurns++;
         //computerPlay();
         win()
     } else{
@@ -194,7 +196,7 @@ boardElement.addEventListener('click', function(event) {
     
     changePlayer();
     renderBoard();
-    console.log(gameState);
+    //console.log(gameState);
 })
 
 //reset to original state
@@ -205,10 +207,9 @@ reset.addEventListener('click', function(event){
     document.querySelector(".player-name1").style.display = "inline-block";
     document.querySelector(".player-name2").style.display = "inline-block";
     document.querySelector(".start").style.display = 'block';
-    
     newGame();
     renderBoard();
-    console.log(gameState);
+    //console.log(gameState);
 })
 
 newGame();
