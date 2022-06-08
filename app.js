@@ -9,7 +9,6 @@ const resetButton = document.querySelector('#reset');
 
 let gameState = {
     board: [],
-    currentPlayer: 'x',
     players: ['x', 'o'],
     playerNames: [null, null],
     numOfTurns: 0,
@@ -99,20 +98,8 @@ function computerPlayO(){
     }
 }
 
-function computerPlayX(){
-    for (let i = 0; i < gameState.board.length; i++){
-        if (gameState.board[i].isClicked === false){
-            gameState.board[i].value = 'x';
-            gameState.board[i].isClicked = true;
-            gameState.numOfTurns++;
-            changeTurn();
-            break;
-        }
-    }
-}
-
 function renderBoard(){
-    boardElement.innerHTML = ''
+    boardElement.innerHTML = '';
     for (let i = 0; i < gameState.board.length; i++){
         let square = document.createElement('div');
         square.innerHTML = gameState.board[i].value;
