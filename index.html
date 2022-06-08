@@ -4,26 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tic-tac-tow</title>
+    <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="./style.css">
     <script defer src="./app.js"></script>
 </head>
 <body>
     <h1>Tic-Tac-Toe</h1>
-    <main>
-        <div id="board"></div>    
-        <h2 id="playerTurn"></div>
-    </main>
+    <main id="board"></main>
+    <div id="result"></div>
     <menu>
-        <div>
-            <input class="player-name1" id="player1" placeholder="Enter Player 1 name">
-            <input class="player-name2" id="player2" placeholder="Enter Player 2 name">
+        <div id= "nameInputs">
+            <input type="text" class="player-names" id="player1" placeholder="player1">
+            <input type="text" class="player-names" id="player2" placeholder="player2">
         </div>
-        <button class="start">Start Game</button>
-        <div id="p1"></div>
-        <div id="p2"></div>
-        <button id="reset">New Game</button>
+        <div id="displayNames">
+            <span id="dispalyPlayer1Name"></span>
+            <span id="dispalyPlayer2Name"></span>
+        </div>
+        <button id="start">start</button>
+        <button id="reset">reset</button>
     </menu>
-
 </body>
 </html>
